@@ -13,8 +13,8 @@ const startTest = async () => {
 
         const body = isTurnstile ? {
             mode: 'turnstile',
-            domain: 'https://go.obsidianbots.site',
-            siteKey: '0x4AAAAAACKRmwNSIwTrXOmc'
+            domain: 'https://links.asprin.dev',
+            siteKey: '0x4AAAAAACMcpMpXde1cSNr6'
         } : {
             mode: 'iuam',
             domain: 'https://new8.olamovies.onl/generate/'
