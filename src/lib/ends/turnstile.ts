@@ -1,19 +1,20 @@
 /**
  * Author: Amber Bisht <amberbisht.me>
  */
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 interface TurnstileData {
     domain: string;
     siteKey: string;
+    referer?: string;
     proxy?: {
         username?: string;
         password?: string;
     };
 }
 
-async function turnstile({ domain, proxy, siteKey }: TurnstileData, page: any) {
+async function turnstile({ domain, proxy, siteKey, referer }: TurnstileData, page: any) {
     if (!domain) throw new Error("Missing domain parameter");
     if (!siteKey) throw new Error("Missing siteKey parameter");
 
@@ -88,6 +89,10 @@ async function turnstile({ domain, proxy, siteKey }: TurnstileData, page: any) {
             }
         });
 
+        if (referer) {
+            await page.setExtraHTTPHeaders({ 'Referer': referer });
+        }
+
         await page.goto(domain, { waitUntil: "domcontentloaded" });
 
         await page.waitForSelector('[name="cf-response"]', { timeout });
@@ -112,4 +117,4 @@ async function turnstile({ domain, proxy, siteKey }: TurnstileData, page: any) {
     }
 }
 
-export = turnstile;
+export default turnstile;
